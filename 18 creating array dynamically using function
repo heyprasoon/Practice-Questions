@@ -1,0 +1,20 @@
+#include <stdio.h>
+int* create(int N) //this function is used to create dynamic arrays
+{
+    int *p=(int*)malloc(N*sizeof(int));  
+    for(int i=0;i<N;i++)
+    {
+        p[i]=i;
+    }
+    return(p);
+}
+void main()
+{
+    int *A,n=5;
+    A=create(n);
+    for(int i=0;i<n;i++)
+    {
+        printf("%d ",A[i]);
+    }
+
+}
