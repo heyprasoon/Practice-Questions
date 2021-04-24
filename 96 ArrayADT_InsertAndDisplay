@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include<math.h>
+#include<iostream>
+using namespace std;
+struct Array
+{
+   int A[20];
+   int size;
+   int length;
+};
+
+void Display(struct Array arr)
+{
+    int i;
+    printf("\n Elements are \n");
+    for(i=0;i<arr.length;i++)
+    {
+        printf("%d ",arr.A[i]);
+    }
+}
+void Insert(struct Array *arr,int ind, int data)
+{
+    if(arr->length>=arr->size)
+        cout<<"Array is already full,\n ";
+    else
+    {
+        for(int i=arr->length;i>ind;i--)
+        {
+            arr->A[i]=arr->A[i-1];
+        }
+        (*arr).A[ind]=data;  //voh toh ese hi likh dia h, nhi toh arrow likh do yaara
+        arr->length++;
+    }
+
+}
+int main()
+{
+    struct Array arr={{2,2,3,8,9,10},20,6};
+    Display(arr);
+    Insert(&arr,6,90);
+    Display(arr);
+
+}
