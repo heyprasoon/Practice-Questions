@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include<math.h>
+#include<iostream>
+using namespace std;
+struct Array
+{
+   int A[20];
+   int size;
+   int length;
+};
+
+int RecBSearch(struct Array *arr,int key,int l,int h)
+{
+
+    static int mid;
+    if(l<h)
+    {
+        mid=(l+h)/2;
+        if(arr->A[mid]==key)
+            return mid;
+        else if(arr->A[mid]<key)
+            RecBSearch(arr,key,mid+1,h);
+        else
+            RecBSearch(arr,key,l,mid-1);
+
+    }
+    else
+        return -1;
+}
+
+int main()
+{
+    struct Array arr={{1,2,3,8,9,10},20,6};
+    cout<<"\n"<<RecBSearch(&arr,9,0,arr.length-1);
+
+}
