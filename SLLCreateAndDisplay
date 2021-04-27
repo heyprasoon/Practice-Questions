@@ -25,9 +25,7 @@ void create(int A[],int n)
     }
 }
 void display()
-{   struct node *head=first,*temp;
-    temp=head;
-
+{   struct node *temp=first;
     while(temp!=NULL)
     {
         printf("%d ",temp->data);
