@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<limits.h>
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    struct node *next;
+}*first=NULL;
+void create(int A[],int n)
+{
+    int i;
+    struct node *t,*last;
+    first=(struct node*)malloc(sizeof(struct node));
+    first->data=A[0];
+    first->next=NULL;
+    last=first;
+    for(i=1;i<n;i++)
+    {
+        t=(struct node*)malloc(sizeof(struct node));
+        t->data=A[i];
+        t->next=NULL;
+        last->next=t;
+        last=t;
+    }
+}
+void display()
+{   struct node *head=first,*temp;
+    temp=head;
+
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+}
+
+
+void insert(struct node *temp,int position, int data)
+{
+    if(position==0)
+    {
+        temp=new struct node;
+        temp->data=data;
+        temp->next=first;
+        first=temp;
+    }
+    else if(position>0)
+    {
+        struct node *p=first;
+        temp=new struct node;
+        temp->data =data;
+        for(int i=0;i<position-1;i++)
+        {
+           p=p->next;
+        }
+        if(p)
+        {
+            temp->next=p->next;
+            p->next=temp;
+        }
+
+    }
+}
+int main()
+{
+    int a[5]={1,2,3,4,5};
+    create(a,5);
+    display();
+    cout<<endl;
+    insert(first,1,7);
+    display();
+}
