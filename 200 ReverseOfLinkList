@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<limits.h>
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    struct node *next;
+}*first=NULL;
+void create(int A[],int n)
+{
+    int i;
+    struct node *t,*last;
+    first=(struct node*)malloc(sizeof(struct node));
+    first->data=A[0];
+    first->next=NULL;
+    last=first;
+    for(i=1;i<n;i++)
+    {
+        t=(struct node*)malloc(sizeof(struct node));
+        t->data=A[i];
+        t->next=NULL;
+        last->next=t;
+        last=t;
+    }
+}
+void display()
+{   struct node *head=first,*temp;
+    temp=head;
+
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+}
+int count(struct node *temp)
+{
+    int count=0;
+    while(temp!=NULL)
+    {
+        count++;
+        temp=temp->next;
+    }
+    return count;
+}
+
+
+void insert(struct node *temp,int position, int data)
+{
+    if(position==0)
+    {
+        temp=new struct node;
+        temp->data=data;
+        temp->next=first;
+        first=temp;
+    }
+    else if(position>0)
+    {
+        struct node *p=first;
+        temp=new struct node;
+        temp->data =data;
+        for(int i=0;i<position-1;i++)
+        {
+           p=p->next;
+        }
+        if(p)
+        {
+            temp->next=p->next;
+            p->next=temp;
+        }
+
+    }
+}
+void Delete(struct node *p,int index)
+{   if(index>0 && index < count(first))
+    {
+        if(index==1)
+        {
+            first=first->next;
+            delete p;
+        }
+        else if(index>1)
+        {
+
+
+            struct node *t;
+
+            for(int i=0;i<index-2;i++)
+                p=p->next;
+            if(p!=NULL) //for checking index is valid or not.
+            {
+                t=p->next;
+                p->next=p->next->next;
+
+                delete [] t;
+            }
+        }
+    }
+}
+void reverseUsingArray(struct node *p)
+{
+    int *A=new int[sizeof(count(first))],i;
+    struct node *q=first;
+    for( i=0;i<count(first);i++)
+    {
+        A[i]=p->data;
+        p=p->next;
+    }
+    i--;
+    while(q!=NULL)
+    {
+        q->data=A[i];
+        i--;
+        q=q->next;
+    }
+}
+void reverse(struct node *p)  //sliding pointer concept
+{
+    struct node *q=NULL,*r=NULL;
+    while(p!=NULL)
+    {
+        r=q;
+        q=p;
+        p=p->next;
+        q->next=r;
+    }
+    first=q;
+}
+void rec_reverse(struct node *q,struct node *p) //reversing of link list using recursion
+{
+    if(p!=NULL)
+    {
+        rec_reverse(p,p->next); //q=p;p=p->next
+        p->next=q;
+    }
+    else
+
+    {
+        first=q;
+
+
+    }
+
+}
+int main()
+{
+    int a[5]={1,2,3,4,5};
+    create(a,5);
+    display();
+    cout<<endl;
+    reverseUsingArray(first);
+    cout<<endl;
+    display();
+    reverse(first);
+    cout<<endl;
+    display();
+    rec_reverse(NULL,first);
+    cout<<endl;
+    display();
+}
