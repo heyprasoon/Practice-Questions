@@ -1,0 +1,142 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    struct node *next;
+}*first=NULL ,*second=NULL;
+ struct node* create(struct node *p,int A[],int n)
+{
+    int i;
+    struct node *t,*last;
+    p=(struct node*)malloc(sizeof(struct node));
+    p->data=A[0];
+    p->next=NULL;
+    last=p;
+    for(i=1;i<n;i++)
+    {
+        t=(struct node*)malloc(sizeof(struct node));
+        t->data=A[i];
+        t->next=NULL;
+        last->next=t;
+        last=t;
+    }
+    return p;
+}
+void display(struct node *temp)
+{
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+}
+int count(struct node *temp)
+{
+    int count=0;
+    while(temp!=NULL)
+    {
+        count++;
+        temp=temp->next;
+    }
+    return count;
+}
+
+
+/*void insert(struct node *temp,int position, int data)
+{
+    if(position==0)
+    {
+        temp=new struct node;
+        temp->data=data;
+        temp->next=first;
+        first=temp;
+    }
+    else if(position>0)
+    {
+        struct node *p=first;
+        temp=new struct node;
+        temp->data =data;
+        for(int i=0;i<position-1;i++)
+        {
+           p=p->next;
+        }
+        if(p)
+        {
+            temp->next=p->next;
+            p->next=temp;
+        }
+
+    }
+}*/
+
+void concat(struct node *p, struct node *q)
+{
+    while(p->next!=NULL)
+    {
+        p=p->next;
+    }
+    p->next=q;
+};
+struct node* merge(struct node *p, struct node *q)
+{
+    struct node *third=NULL,*last=NULL;
+    if(p->data<q->data)
+    {
+        third=last=p;
+        p=p->next;
+        last->next=NULL;
+    }
+    else
+    {
+        third=last=q;
+        q=q->next;
+        last->next=NULL;
+    }
+    while(p!=NULL && q!=NULL)
+    {
+        if(p->data<q->data)
+        {
+            last->next=p;
+            last=p;
+            p=p->next;
+            last->next=NULL;
+        }
+        else
+        {
+            last->next=q;
+            last=q;
+            q=q->next;
+            last->next=NULL;
+        }
+
+    }
+    if(p!=NULL)
+    {
+            last->next=p;
+
+    }
+    else
+    {
+            last->next=q;
+    }
+
+    return third;
+
+}
+int main()
+{
+    int a[3]={1,2,3};
+    int b[3]={7,8,9};
+    first=create(first,a,3);
+    second=create(second,b,3);
+   // display(first);
+    cout<<endl;
+   // display(second);
+    display(merge(first,second));  //sorted merge
+    cout<<endl;
+   // display(first);
+
+}
