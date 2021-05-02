@@ -1,0 +1,116 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+using namespace std;
+struct node
+{   struct node *prev;
+    int data;
+    struct node *next;
+}*head=NULL;
+ struct node* create(struct node *p,int A[],int n)
+{
+    int i;
+    struct node *t,*last;
+    p=(struct node*)malloc(sizeof(struct node));
+    p->prev=NULL;
+    p->data=A[0];
+    p->next=NULL;
+    last=p;
+    for(i=1;i<n;i++)
+    {
+        t=(struct node*)malloc(sizeof(struct node));
+        t->prev=last;
+        t->data=A[i];
+        t->next=NULL;
+        last->next=t;
+        last=t;
+    }
+    return p;
+}
+void display(struct node *temp)
+{
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+}
+
+void insert(struct node *temp,int index,int data)
+{
+
+    struct node *t=new node;
+    if(index==0)         // inserting at index 0;
+    {
+        t->prev=NULL;
+        t->data=data;
+        t->next=temp;
+        temp->prev=t;
+        head=t;
+
+    }
+    else if(index>0)
+    {
+        for(int i=1;i<index;i++)
+        {
+            temp=temp->next;
+        }
+        t->data=data;
+        t->next=temp->next;
+        t->prev=temp;
+        temp->next=t;
+        if(t->next!=NULL)
+        {
+            t->next->prev=t;
+        }
+
+    }
+
+}
+void Delete( struct node *t, int index)
+{
+    if(index==1)
+    {
+     head=head->next;
+     if(head!=NULL) //check if there is a single node or not
+     {
+         head->prev=NULL;
+     }
+     delete t;
+    }
+    else if(index>1)
+    {
+        for(int i=0;i<index-1;i++)
+        {
+            t=t->next;
+        }
+        t->prev->next=t->next;
+        if(t->next!=NULL)
+        {
+            t->next->prev=t->prev;
+        }
+        delete t;
+    }
+}
+void reverse(struct node* t)
+{
+    struct node *temp;
+    while(t!=NULL)
+    {
+        temp=t->next;
+        t->next=t->prev;
+        t->prev=temp;
+
+        if(t->prev==NULL)
+            head=t;
+        t=t->prev;
+    }
+
+}
+int main()
+{
+    int a[]={1,2,3,4};
+    head=create(head,a,4);
+    reverse(head);
+    display(head);
+}
