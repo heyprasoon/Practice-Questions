@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    struct node *next;
+}*head=NULL;
+ struct node* create(struct node *p,int A[],int n)
+{
+    int i;
+    struct node *t,*last;
+    p=(struct node*)malloc(sizeof(struct node));
+    p->data=A[0];
+    p->next=p;
+    last=p;
+    for(i=1;i<n;i++)
+    {
+        t=(struct node*)malloc(sizeof(struct node));
+        t->data=A[i];
+        t->next=p;
+        last->next=t;
+        last=t;
+    }
+    return p;
+}
+void display(struct node *temp)
+{
+    do
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }while(temp!=head);
+}
+void rec_display(struct node *temp)
+{
+    static int flag=0;
+    if(flag==0 || temp!=head)
+    {
+        flag=1;
+        printf("%d ",temp->data);
+        rec_display(temp->next);
+    }
+    flag=0;           //agli baar funcyion call krenge agar toh flag ki value 1 hogi,,,toh isilie flag ko 0 kara h
+}
+void insert(struct node *temp,int index,int data)
+{
+
+    struct node *t=new node;
+    if(index==0)         // inserting at index 0;
+    {
+        while(temp->next!=head)
+        {
+            temp=temp->next;
+        }
+        t->data=data;
+        t->next=head;
+        temp->next=t;
+        head=t;
+    }
+    else if(index>0)
+    {
+        for(int i=1;i<index;i++)
+        {
+            temp=temp->next;
+        }
+        t->data=data;
+        t->next=temp->next;
+        temp->next=t;
+    }
+
+}
+
+int main()
+{
+    int a[3]={1,2,3};
+
+    head=create(head,a,3);
+    //display(head);
+    insert(head,0,4);
+    insert(head,2,5);
+    rec_display(head);
+
+
+}
