@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+using namespace std;
+struct stack
+{
+    int size;
+    int top;
+    int *s;
+};
+void create(stack *st)
+{
+    st->size=5;
+    st->top=-1;
+    st->s=new int [sizeof(st->size) ];
+}
+void display(stack st)
+{
+    for(int i=st.top;i>=0;i--)
+        cout<<st.s[i]<<" ";
+    cout<<endl;
+}
+void push(stack *st,int data)
+{
+    if(st->top==st->size-1)
+        cout<<"stack is overflow\n";
+    else
+    {
+        st->top++;
+        st->s[st->top]=data;
+    }
+}
+int pop(stack *st)
+{
+    int data=-1;
+    if(st->top==-1)
+        cout<<"stack is underflow\n";
+    else
+    {
+        data=st->s[st->top];
+        st->top--;
+    }
+    return data;
+}
+int peek(stack st,int pos)
+{
+    if(pos<st.top && st.top>-1)
+    {
+        return st.s[st.top-pos+1];
+    }
+    else
+        return -1;
+}
+int stacktop(stack st)
+{
+    if(st.top==-1)
+        return -1;
+    else
+    {
+        return st.s[st.top];
+    }
+}
+int isempty(stack st)
+{
+    if(st.top==-1)
+        return 1;
+    else
+        return 0;
+}
+int isfull(stack st)
+{
+    if(st.top==st.size-1)      
+        return 1;               //or we simply write retuen st.top==st.size-1
+    else
+        return 0;
+}
+
+int main()
+{
+    stack st;
+    create(&st);
+
+    push(&st,10);
+    push(&st,11);
+    push(&st,12);
+    push(&st,13);
+    push(&st,14);
+    cout<<pop(&st)<<" is popped out\n";
+    cout<<peek(st,2)<<" is there \n";
+    cout<<stacktop(st)<<" on the top\n";
+    display(st);
+    return 0;
+}
