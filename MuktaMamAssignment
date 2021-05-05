@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+using namespace std;
+void front()
+{
+    cout<<"********************************************************************************************************************";
+    cout<<endl<<endl<<endl<<endl;
+    cout<<"               Welcome to NITkart.com , the Website where you can shop anything from anywhere literally!!!";
+    cout<<endl<<endl<<endl<<endl;
+    cout<<"********************************************************************************************************************";
+
+}
+int main()
+{
+    front();
+    system("cls");
+    return 0;
+}
