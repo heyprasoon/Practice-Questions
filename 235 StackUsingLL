@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+using namespace std;
+struct snode
+{
+    int data;
+    snode *next;
+
+}*top=NULL;
+void create(snode *st)
+{
+    int A[3]={1,2,3};
+    st=new snode;
+    st->data=A[0];
+    st->next=NULL;
+    snode *last=st;
+    for(int i=1;i<3;i++)
+    {
+        snode *t=new snode;
+        t->data=A[i];
+        last->next=t;
+        last=t;
+        t->next=NULL;
+    }
+    top=st;
+
+
+
+}
+void display(snode *t)
+{
+
+    while(t!=NULL)
+    {
+        cout<<t->data<<" ";
+        t=t->next;
+    }
+    cout<<endl;
+}
+void push(int data)
+{
+    snode *t=new snode;
+    if(t==NULL)
+        cout<<"stack is overflow\n";
+    else
+    {
+        t->data=data;
+        t->next=top;
+        top=t;
+
+    }
+}
+int pop()
+{
+    int data=-1;
+    if(top==NULL)
+        cout<<"stack is underflow\n";
+    else
+    {
+        snode *t=top;
+        top=top->next;
+        data= t->data;
+        free(t);
+    }
+    return data;
+}
+int peek(int pos)
+{
+    snode *t=top;
+    for(int i=0;i<pos-1&&t!=NULL;i++)
+    {
+        t=t->next;
+    }
+    if(t!=NULL)
+        return t->data;
+    else
+        return -1;
+}
+
+
+int main()
+{
+
+    create(top);
+    display(top);
+    push(4);
+    display(top);
+    cout<<pop()<<endl;
+    cout<<peek(3)<<endl;
+    display(top);
+}
