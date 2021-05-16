@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<limits.h>
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    struct node *next;
+}*front=NULL,*rear=NULL;
+void enqueue(int data)
+{
+
+    node *p=new node;
+    if(p==NULL)
+    {
+        cout<<"queue is full ";
+    }
+    else
+    {
+        p->data=data;
+        p->next=NULL;
+        if(front==NULL) //for creating first NODE only, remember it
+        {
+            front=rear=p;
+        }
+        else
+        {
+            rear->next=p;
+            rear=p;
+        }
+    }
+}
+int dequeue()
+{
+    int x=-1; //we initialize this if queue is empty then return -1
+    node* p=new node;
+    if(front==NULL)
+        cout<<"Queue is empty \n";
+    else
+    {
+        p=front;
+        front=front->next;
+        x=p->data;
+        free(p);
+    }
+    return x;
+}
+void display()
+{   struct node *temp=front;
+
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+}
+
+
+
+int main()
+{
+    enqueue(1);
+    enqueue(1);
+    enqueue(1);
+    enqueue(1);
+    cout<<endl<<dequeue()<<endl;
+
+    display();
+}
