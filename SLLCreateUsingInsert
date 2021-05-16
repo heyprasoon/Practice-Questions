@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<limits.h>
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    struct node *next;
+}*first=NULL;
+void insert(struct node *temp, int data)
+{
+
+    if(first==NULL)
+    {
+        temp=new struct node;
+        temp->data=data;
+        temp->next=NULL;
+        first=temp;
+    }
+    else
+    {
+        struct node *p=first;
+        temp=new struct node;
+        temp->data =data;
+        temp->next=NULL;
+        while(p->next!=NULL)
+        {
+           p=p->next;
+        }
+        p->next=temp;
+    }
+}
+void create()
+{
+    char ch;
+    cout<<"Do You want to Enter number in link list\n";
+    cout<<"press y/Y for yes, n/n for No\n";
+    cin>>ch;
+    switch(ch)
+    {
+        case 'y':
+        case 'Y':
+            int x;
+            cout<<"Enter Value ";
+            cin>>x;
+            insert(first,x);
+            create();
+            break;
+        case 'n':
+        case'N':
+            break;
+        default:
+            cout<<"value is wrong";
+    }
+
+}
+void display()
+{   struct node *head=first,*temp;
+    temp=head;
+
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+}
+
+
+
+int main()
+{
+    create();
+    display();
+}
