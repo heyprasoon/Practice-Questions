@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+#include<string.h>
+using namespace std;
+class queue
+{
+private:
+    int size;
+    int front;
+    int rear;
+    int *Q;
+public:
+    queue(int size){front=rear=-1;this->size=size;Q=new int[size];}
+    void enqueue(int x);
+    int dequeue();
+    void display();
+
+};
+void queue:: enqueue(int data)
+{
+    if(rear==size-1)
+        cout<<"queue is full";
+    else
+    {
+        rear++;
+        Q[rear]=data;
+    }
+}
+int queue:: dequeue()
+{
+    if(rear==front)
+    {
+        cout<<"queue is empty";
+        return -1;
+    }
+    else
+    {
+        front++;
+        return Q[front];
+    }
+}
+void queue:: display()
+{
+    for(int i=front+1;i<=rear;i++)
+    {
+        cout<<Q[i]<<" ";
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    queue q(4);
+    q.enqueue(1);
+    q.enqueue(2);
+    q.enqueue(3);
+    q.enqueue(4);
+    cout<<q.dequeue()<<endl;
+    q.display();
+
+
+}
