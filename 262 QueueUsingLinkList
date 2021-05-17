@@ -7,8 +7,20 @@ struct node
 {
     int data;
     struct node *next;
-}*front=NULL,*rear=NULL;
-void enqueue(int data)
+};
+struct queue
+{
+    node *front;
+    node *rear;
+};
+queue* createqueue()
+{
+    queue *q=new queue;
+    q->front=NULL;
+    q->rear=NULL;
+    return q;
+}
+void enqueue(queue *q,int data)
 {
 
     node *p=new node;
@@ -20,34 +32,33 @@ void enqueue(int data)
     {
         p->data=data;
         p->next=NULL;
-        if(front==NULL) //for creating first NODE only, remember it
+        if(q->front==NULL) //for creating first NODE only, remember it
         {
-            front=rear=p;
+            q->front=q->rear=p;
         }
         else
         {
-            rear->next=p;
-            rear=p;
+            q->rear->next=p;
+            q->rear=p;
         }
     }
 }
-int dequeue()
+int dequeue(queue *q)
 {
     int x=-1; //we initialize this if queue is empty then return -1
-    node* p=new node;
-    if(front==NULL)
+    if(q->front==NULL)
         cout<<"Queue is empty \n";
     else
     {
-        p=front;
-        front=front->next;
+        node*p=q->front;
+        q->front=q->front->next;
         x=p->data;
         free(p);
     }
     return x;
 }
-void display()
-{   struct node *temp=front;
+void display(queue *q)
+{   struct node *temp=q->front;
 
     while(temp!=NULL)
     {
@@ -60,11 +71,13 @@ void display()
 
 int main()
 {
-    enqueue(1);
-    enqueue(1);
-    enqueue(1);
-    enqueue(1);
-    cout<<endl<<dequeue()<<endl;
+    queue *q=createqueue();
 
-    display();
+    enqueue(q,1);
+    enqueue(q,2);
+    enqueue(q,3);
+    enqueue(q,4);
+    cout<<endl<<dequeue(q)<<endl;
+
+    display(q);
 }
