@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+using namespace std;
+class snode
+{
+    public:
+    int data;
+    snode *next;
+
+};
+class stack
+{
+private:
+    snode *top;
+public:
+    stack(){top=NULL;};
+    void push(int);
+    int pop();
+    void display();
+    int peek(int);
+};
+void stack:: display()
+{
+    snode *t=top;
+    while(t!=NULL)
+    {
+        cout<<t->data<<" ";
+        t=t->next;
+    }
+    cout<<endl;
+}
+void stack::push(int data)
+{
+    snode *t=new snode;
+    if(t==NULL)
+        cout<<"stack is overflow\n";
+    else
+    {
+        t->data=data;
+        t->next=top;
+        top=t;
+
+    }
+}
+int stack:: pop()
+{
+    int data=-1;
+    if(top==NULL)
+        cout<<"stack is underflow\n";
+    else
+    {
+        snode *t=top;
+        top=top->next;
+        data= t->data;
+        free(t);
+    }
+    return data;
+}
+int stack:: peek(int pos)
+{
+    snode *t=top;
+    for(int i=0;i<pos-1&&t!=NULL;i++)
+    {
+        t=t->next;
+    }
+    if(t!=NULL)
+        return t->data;
+    else
+        return -1;
+}
+
+
+int main()
+{
+    stack s;
+
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    s.push(4);
+
+    cout<<endl<<s.pop()<<endl;
+   // cout<<peek(3)<<endl;
+    s.display();
+}
