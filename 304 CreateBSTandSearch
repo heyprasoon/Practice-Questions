@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+#include<string.h>
+using namespace std;
+class node   //this node is for tree
+{
+public:
+    node *lchild;
+    int data;
+    node *rchild;
+
+};
+class Tree
+{
+public:
+    node *root;
+    Tree(){root=NULL;}
+    node* CreateTree(node* p,int key);
+    void Preorder(node *p);
+    void Postorder(node *p);
+    void Inorder(node *p);
+    int Search(node *p,int key);
+};
+node* Tree:: CreateTree(node *p,int key)
+{
+
+    if(p==NULL) //this is for creating first node
+    {
+        node*t;
+        t=new node;
+        t->data=key;
+        t->lchild=t->rchild=NULL;
+        return t;
+    }
+    if(key<p->data)
+    {
+        p->lchild=CreateTree(p->lchild,key);
+    }
+    else if(key>p->data)
+    {
+        p->rchild=CreateTree(p->rchild,key);
+    }
+    return p;
+}
+int Tree::Search(node *p,int key)
+{
+    if(p==NULL)
+    {
+        return -1;
+    }
+    if(p->data==key)
+    {
+        return p->data;
+    }
+    else if(key<p->data)
+    {
+        Search(p->lchild,key);
+    }
+    else
+        Search(p->rchild,key);
+}
+void Tree::Preorder(node*p)
+{
+    if(p)
+    {
+        printf("%d ",p->data);
+        Preorder(p->lchild);
+        Preorder(p->rchild);
+    }
+
+}
+void Tree::Inorder(node*p)
+{
+    if(p)
+    {
+        Inorder(p->lchild);
+        printf("%d ",p->data);
+        Inorder(p->rchild);
+    }
+
+}
+
+
+int main()
+{
+    Tree t;
+    t.root=t.CreateTree(t.root,20);
+    t.CreateTree(t.root,10);
+    t.CreateTree(t.root,30);
+    t.CreateTree(t.root,15);
+    t.Inorder(t.root);
+    int temp=t.Search(t.root,15);
+    cout<<temp;
+
+    return 0;
+
+
+
+}
