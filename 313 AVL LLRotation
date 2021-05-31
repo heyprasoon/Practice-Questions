@@ -1,0 +1,172 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<iostream>
+#include<string.h>
+using namespace std;
+class node   //this node is for AVL
+{
+public:
+    node *lchild;
+    int data;
+    int height;
+    node *rchild;
+};
+class AVL
+{
+public:
+    node *root;
+    AVL(){root=NULL;}
+    node* CreateAVL(node* p,int key);
+    void Preorder(node *p);
+    void Postorder(node *p);
+    void Inorder(node *p);
+    int Height(node*);
+    node* Delete(node* p,int key);
+    int Search(node *p,int key);
+    node* InPre(node*);
+    node* InSucc(node*);
+    void createpre(int*,int);
+    int NodeHeight(node*);
+    int BalanceFactor(node*);
+    node* LLRotation(node*);
+    node* LRRotation(node*);
+    node* RRRotation(node*);
+    node* RLRotation(node*);
+};
+node* AVL:: CreateAVL(node *p,int key)
+{
+
+    if(p==NULL) //this is for creating first node and then leaf nodes
+    {
+        node*t;
+        t=new node;
+        t->data=key;
+        t->height=1;
+        t->lchild=t->rchild=NULL;
+        return t;
+    }
+    if(key<p->data)
+    {
+        p->lchild=CreateAVL(p->lchild,key);
+    }
+    else if(key>p->data)
+    {
+        p->rchild=CreateAVL(p->rchild,key);
+    }
+    p->height=NodeHeight(p);
+
+    if(BalanceFactor(p)==2 && BalanceFactor(p->lchild)==1) //LL Rotation
+        return LLRotation(p);
+    else if(BalanceFactor(p)==2 && BalanceFactor(p->lchild)==-1) //LR Rotation
+        return LRRotation(p);
+    else if(BalanceFactor(p)==-2 && BalanceFactor(p->lchild)==-1) //RR Rotation
+        return RRRotation(p);
+    else if(BalanceFactor(p)==-2 && BalanceFactor(p->lchild)==1) //RL Rotation
+        return RLRotation(p);
+    return p;
+}
+int AVL::NodeHeight(node *p)
+{
+    int hl,hr;
+    hl=p&&p->lchild?p->lchild->height:0;
+    hr=p&&p->rchild?p->rchild->height:0;
+    return hl>hr?hl+1:hr+1;
+
+}
+int AVL::BalanceFactor(node *p)
+{
+    int hl,hr;
+    hl=p&&p->lchild?p->lchild->height:0;
+    hr=p&&p->rchild?p->rchild->height:0;
+    return hl-hr;
+}
+int AVL::Height(node*p)
+{
+    int x,y;
+    if(p==NULL)return 0;
+    x=Height(p->lchild);
+    y=Height(p->rchild);
+    return x>y?x+1:y+1;
+}
+int AVL::Search(node *p,int key)
+{
+    if(p==NULL)
+    {
+        return -1;
+    }
+    if(p->data==key)
+    {
+        return p->data;
+    }
+    else if(key<p->data)
+    {
+        Search(p->lchild,key);
+    }
+    else
+        Search(p->rchild,key);
+    return 0;
+}
+void AVL::Preorder(node*p)
+{
+    if(p)
+    {
+        printf("%d ",p->data);
+        Preorder(p->lchild);
+        Preorder(p->rchild);
+    }
+
+}
+void AVL::Inorder(node*p)
+{
+    if(p)
+    {
+        Inorder(p->lchild);
+        printf("%d ",p->data);
+        Inorder(p->rchild);
+    }
+
+}
+node* AVL::LLRotation(node *p)
+{
+    node *pl=p->lchild;
+    node *plr=pl->rchild;
+
+    pl->rchild=p;
+    p->lchild=plr;
+    p->height=NodeHeight(p);
+    pl->height=NodeHeight(pl);
+
+    if(root==p)
+        root=pl;
+
+    return pl;
+}
+node* AVL::LRRotation(node *p)
+{
+
+}
+
+node* AVL::RRRotation(node *p)
+{
+}
+
+node* AVL::RLRotation(node *p)
+{
+}
+
+
+int main()
+{
+    AVL t;
+    t.root=t.CreateAVL(t.root,10);
+    t.CreateAVL(t.root,5);
+    t.CreateAVL(t.root,2);
+    t.Preorder(t.root);
+    cout<<endl;
+    t.Inorder(t.root);
+
+    return 0;
+
+
+
+}
