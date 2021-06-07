@@ -16,7 +16,7 @@ int Delete(int *A,int n)
         {
             swap(A[i],A[j]);
             i=j;
-            j=2*j+1;
+            j=2*i+1; //left child of next parent
             }
         else
             break;
